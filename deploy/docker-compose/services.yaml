@@ -22,6 +22,12 @@ services:
       GAMECHANGER_DEMO_DEPLOYMENT: "true"
       GAMECHANGER_DEMO_USER: "007"
       GAMECHANGER_DISABLE_STATS_API: "true"
+      GAMECHANGER_ELASTICSEARCH_HOST: "elasticsearch"
+      GAMECHANGER_ELASTICSEARCH_PROTOCOL: "http"
+      GAMECHANGER_ELASTICSEARCH_PORT: 9200
+      GAMECHANGER_ELASTICSEARCH_INDEX: "gamechanger_original"
+      GAMECHANGER_ELASTICSEARCH_USER: "elasticsearch"
+      GAMECHANGER_ELASTICSEARCH_PASSWORD: "elasticsearch"
       S3_REGION: "us-east-1"
       S3_IS_MINIO: "true"
       S3_ACCESS_KEY: "dev-access-key"
@@ -30,7 +36,7 @@ services:
       MYSQL_HOST_MATOMO: "mysql"
       MYSQL_USER_MATOMO: "root"
       MYSQL_PASSWORD_MATOMO: "password"
-#      CHOKIDAR_USEPOLLING: "true"
+    #      CHOKIDAR_USEPOLLING: "true"
     depends_on:
       - redis
       - postgres
@@ -47,37 +53,37 @@ services:
         cd /opt/app-root/src/backend
         node index.js
 
-  ml-api:
-    image: "${GC_ML_API_IMAGE}"
-    container_name: "${COMPOSE_PROJECT_NAME:-gc}-ml-api"
-    user: "1000:1000"
-    depends_on:
-      - redis
-    environment:
-      ENV_TYPE: "PROD"
-      DOWNLOAD_DEP: "false"
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
-      ES_HOST: elasticsearch
-      ES_PORT: 9200
-      ES_USER: elasticsearch
-      ES_PASSWORD: elasticsearch
-      GC_WEB_USER: "007"
-      GC_WEB_HOST: gc-web
-      GC_WEB_PORT: 8080
-      GC_WEB_USER: "007"
-    ports:
-      - "5000:5000"
-    volumes:
-      - "/mnt/extra/models:/opt/app-root/src/gamechangerml/models:rw"
-    networks:
-      - app-net
+  # ml-api:
+  #   image: "${GC_ML_API_IMAGE}"
+  #   container_name: "${COMPOSE_PROJECT_NAME:-gc}-ml-api"
+  #   user: "1000:1000"
+  #   depends_on:
+  #     - redis
+  #   environment:
+  #     ENV_TYPE: "PROD"
+  #     DOWNLOAD_DEP: "false"
+  #     REDIS_HOST: redis
+  #     REDIS_PORT: 6379
+  #     ES_HOST: elasticsearch
+  #     ES_PORT: 9200
+  #     ES_USER: elasticsearch
+  #     ES_PASSWORD: elasticsearch
+  #     GC_WEB_USER: "007"
+  #     GC_WEB_HOST: gc-web
+  #     GC_WEB_PORT: 8080
+  #     GC_WEB_USER: "007"
+  #   ports:
+  #     - "5000:5000"
+  #   volumes:
+  #     - "/mnt/extra/models:/opt/app-root/src/gamechangerml/models:rw"
+  #   networks:
+  #     - app-net
 
   redis:
     image: "${GC_REDIS_IMAGE}"
     container_name: "${COMPOSE_PROJECT_NAME:-gc}-redis"
     healthcheck:
-      test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
     ports:
       - "6379:6379"
     volumes:
@@ -131,6 +137,7 @@ services:
       - KIBANA_SYSTEM_PASSWORD=elasticsearch
     networks:
       - app-net
+    platform: linux/amd64
 
   s3-server:
     image: "${GC_S3_SERVER_IMAGE}"
@@ -163,7 +170,7 @@ services:
       - "POSTGRES_PASSWORD=password"
       - "POSTGRES_DB=postgres"
       - "PGDATA=/pg-data"
-#      - "POSTGRES_HOST_AUTH_METHOD=trust"
+    #      - "POSTGRES_HOST_AUTH_METHOD=trust"
     networks:
       - app-net
 
@@ -204,5 +211,5 @@ services:
       - app-net
 
 volumes:
-    mysql:
-    matomo:
+  mysql:
+  matomo:

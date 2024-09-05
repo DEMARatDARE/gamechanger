@@ -1,5 +1,5 @@
 ---
-version: '3.5'
+version: "3.5"
 
 volumes:
   s3-data:
@@ -8,7 +8,7 @@ volumes:
   es-data:
   redis-data:
   redis-etc:
-  ml-api-data:
+  #ml-api-data:
   data-pipelines-tmp:
   data-pipelines-rendered-config:
 

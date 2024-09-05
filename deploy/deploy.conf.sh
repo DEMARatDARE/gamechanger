@@ -22,7 +22,7 @@ declare -A REPO_URL_MAP=(\
   [gamechanger-data]="https://github.com/neofob/gamechanger-data.git" \
   [gamechanger-ml]="https://github.com/neofob/gamechanger-ml.git" \
   [gamechanger-neo4j-plugin]="https://github.com/dod-advana/gamechanger-neo4j-plugin.git" \
-  [gamechanger-crawlers]="https://github.com/dod-advana/gamechanger-crawlers.git" \
+  [gamechanger-crawlers]="https://github.com/neofob/gamechanger-crawlers.git" \
 )
 
 declare -A REPO_TAG_MAP=(\
@@ -30,7 +30,7 @@ declare -A REPO_TAG_MAP=(\
   [gamechanger-data]="tp-dev" \
   [gamechanger-ml]="tp-dev" \
   [gamechanger-neo4j-plugin]="main" \
-  [gamechanger-crawlers]="4ac4f0e" \
+  [gamechanger-crawlers]="tp-dev" \
 )
 
 declare -A REPO_DIR_MAP=(\
